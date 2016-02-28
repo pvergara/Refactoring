@@ -1,5 +1,6 @@
 package ecos.org;
 
+import ecos.org.objectMother.CustomerObjectMother;
 import org.ecos.Customer;
 import org.ecos.Movie;
 import org.ecos.Rental;
@@ -8,17 +9,21 @@ import org.junit.Test;
 import static org.hamcrest.core.StringContains.containsString;
 import static org.junit.Assert.assertThat;
 
-
 public class CustomerStatementTests {
     @Test
     public void statementForASingleRegularMovieAndASingleDay(){
-        Customer customer = new Customer("Martin");
+        //Arrange
         String movieName = "The Wizard of Oz";
-        Movie movie = new Movie(movieName,Movie.REGULAR);
-        Rental rental = new Rental(movie,1);
-        customer.addRentals(rental);
+
+        Customer customer = CustomerObjectMother.
+            initializeTo("Martin").
+                addRental(1,movieName,Movie.REGULAR).
+            generate();
+
+        //Act
         String result = customer.statement();
 
+        //Asserts
         assertThat(result, containsString(String.format("%s\t%s",movieName,2.0)));
         assertThat(result, containsString(String.format("%s %s %s","You earned",1,"frequent renter points")));
         assertThat(result, containsString(String.format("%s %s","Amounts owed is",2.0)));
