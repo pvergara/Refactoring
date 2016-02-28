@@ -25,7 +25,7 @@ public class CustomerStatementTests {
     }
 
     @Test
-    public void statementForASingleChildrensMovieAndASingleDay(){
+    public void statementForASingleChildren9MovieAndASingleDay(){
         Customer customer = new Customer("Martin");
         String movieName = "Teen beach movie";
         Movie movie = new Movie(movieName,Movie.CHILDRENS);
